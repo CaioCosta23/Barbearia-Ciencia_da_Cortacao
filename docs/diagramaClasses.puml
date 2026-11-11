@@ -1,0 +1,123 @@
+@startuml Barbearia
+
+title Ciência da Cortação
+
+class CEP {
+    - cep: String
+}
+
+class Endereco {
+    - rua: String
+    - numero: int
+    - complemento: String
+    - cidade: String
+    - estado: String
+    - pais: String    
+}
+
+class Telefone {
+    - principal: String
+    # secundario: String
+}
+
+class Barbearia {
+    # nome: String
+    # descricao: String
+    - horarioInicioExpediente: LocalDateTime
+    - horarioFimExpediente: LocalDateTime
+}
+
+abstract class Usuario {
+    - id: int
+    - nome: String
+    - login: String
+    - Senha: String
+    - Genero: char
+}
+
+class CPF {
+    - CPF: String
+}
+
+class Email {
+    - email: String
+}
+
+class Cliente {
+    - dataNascimento: Date
+}
+
+class Barbeiro {
+    - numeroRegistro: String
+    - comissao: float
+}
+
+class Administrador {
+
+}
+
+class Atendente {
+
+}
+
+class Servico {
+    - id: int
+    - descricao: String
+    - categoria: String
+    - preco: float
+    # duracaoMedia: Time
+}
+
+class Especialidade {
+    - id: int
+    - descricao: String
+    - acrescimoPreco: float
+}
+
+class Agendamento {
+    - id: String
+    - data: Date
+    - horario: Time
+    # observacao: String
+}
+
+enum dias as "DisponibilidadeDias" <<Enumeration>> {
+    SEGUNDA
+    TERCA
+    QUARTA
+    QUINTA
+    SEXTA
+    SABADO
+}
+
+enum status as "StatusAgendamento" <<Enumeration>> {
+    AGENDADO
+    CANCELADO
+    SERVICO_CONCLUIDO
+}
+
+enum vinculo as "StatusVinculoEmpregaticio" <<Enumeration>> {
+    ATIVO
+    DESLIGADO
+}
+
+
+Usuario <|-- Cliente
+Usuario <|-- Barbeiro
+Usuario <|-- Administrador
+Usuario <|-- Atendente
+
+Endereco "1" -- "1" CEP: possui
+
+Barbearia "1" -- "1" Endereco: possui
+
+Cliente "1" -- "1" CPF : possui
+Cliente "1" -- "1" Email : possui
+Barbeiro "1" -- "1" Telefone: possui
+
+Atendente "1" -- "1" Agendamento: registra
+Cliente "1" -- "1" Agendamento: realiza
+
+
+
+@enduml
